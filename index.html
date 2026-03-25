@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Lukman · Aktuaria & Data Analyst | Portofolio Profesional</title>
+    <!-- Google Fonts + Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            scroll-behavior: smooth;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* custom scrollbar tetap elegan */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+
+        /* container fleksibel dengan padding proporsional */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+        }
+
+        /* ========== RESPONSIVE NAVBAR ========== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            padding: 0.7rem 1.5rem;
+            border-radius: 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid rgba(59,130,246,0.2);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        .logo {
+            font-weight: 800;
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .nav-links {
+            display: flex;
+            gap: clamp(0.8rem, 3vw, 2rem);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            color: #1e293b;
+            transition: 0.2s;
+            font-size: clamp(0.85rem, 3vw, 1rem);
+        }
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+        .btn-resume {
+            background: #0f172a;
+            color: white !important;
+            padding: 0.45rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: clamp(0.8rem, 3vw, 0.95rem);
+            white-space: nowrap;
+        }
+        .btn-resume:hover {
+            background: #1e293b;
+            transform: scale(1.02);
+        }
+
+        /* ========== HERO SECTION FLEXIBLE ========== */
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            border-radius: 2rem;
+            padding: clamp(1.5rem, 5vw, 2.5rem);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.05);
+        }
+        .hero-content {
+            flex: 1;
+            min-width: 220px;
+        }
+        .hero-content h1 {
+            font-size: clamp(1.8rem, 6vw, 3.2rem);
+            font-weight: 800;
+            background: linear-gradient(to right, #0f172a, #2563eb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        .badge {
+            background: #e0f2fe;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: clamp(0.7rem, 3vw, 0.85rem);
+            font-weight: 600;
+            color: #0369a1;
+            margin: 0.5rem 0 0.8rem 0;
+        }
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+        .stat-item {
+            font-size: clamp(0.75rem, 3.5vw, 0.9rem);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stat-item i {
+            color: #3b82f6;
+            width: 1.2rem;
+        }
+        .hero-avatar {
+            background: linear-gradient(145deg, #d9e6ff, #ffffff);
+            border-radius: 50%;
+            padding: 0.5rem;
+            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+            width: clamp(100px, 20vw, 160px);
+            height: clamp(100px, 20vw, 160px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .avatar-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+        .hero-avatar:hover .avatar-image {
+            transform: scale(1.05);
+        }
+
+        /* section title responsif */
+        .section-title {
+            font-size: clamp(1.4rem, 5vw, 1.9rem);
+            font-weight: 700;
+            margin: 2rem 0 1.2rem 0;
+            border-left: 5px solid #3b82f6;
+            padding-left: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* grid 2 kolom -> mobile 1 kolom */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
+        }
+
+        /* card style fleksibel */
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: clamp(1rem, 4vw, 1.8rem);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+            transition: all 0.25s ease;
+            border: 1px solid #eef2ff;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+            border-color: #b9d0f8;
+        }
+        .card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: clamp(1.2rem, 4vw, 1.45rem);
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            flex-wrap: wrap;
+        }
+        .card h3 i {
+            color: #3b82f6;
+            font-size: 1.5rem;
+        }
+
+        /* timeline item */
+        .timeline-item {
+            margin-bottom: 1.3rem;
+            border-left: 2px solid #e2e8f0;
+            padding-left: 1rem;
+        }
+        .timeline-date {
+            font-weight: 700;
+            color: #2563eb;
+            font-size: 0.75rem;
+            letter-spacing: 0.3px;
+        }
+        .timeline-title {
+            font-weight: 700;
+            margin: 0.2rem 0;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+        }
+
+        /* skill bar responsif */
+        .skill-bars {
+            margin-top: 0.5rem;
+        }
+        .skill-item {
+            margin-bottom: 1rem;
+        }
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+            font-weight: 500;
+            margin-bottom: 5px;
+            flex-wrap: wrap;
+        }
+        .bar-bg {
+            background: #e2e8f0;
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            width: 0%;
+            height: 100%;
+            border-radius: 20px;
+            transition: width 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        /* chart container responsif */
+        .chart-container {
+            background: white;
+            border-radius: 1.5rem;
+            padding: clamp(1rem, 4vw, 1.5rem);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            border: 1px solid #eef2ff;
+            height: 100%;
+        }
+        canvas {
+            max-height: 260px;
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        /* contact buttons */
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        .contact-btn {
+            background: #f1f5f9;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #0f172a;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+        }
+        .contact-btn:hover {
+            background: #3b82f6;
+            color: white;
+        }
+        .highlight {
+            background: #eff6ff;
+            border-radius: 2rem;
+            padding: 0.25rem 0.9rem;
+            font-weight: 600;
+            font-size: clamp(0.75rem, 3vw, 0.85rem);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* list style custom */
+        ul {
+            margin-left: 0.5rem;
+        }
+        ul li {
+            margin-bottom: 0.6rem;
+            font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        footer {
+            margin-top: 3.5rem;
+            text-align: center;
+            padding: 1.8rem 1rem;
+            border-top: 1px solid #e2e8f0;
+            color: #475569;
+            font-size: clamp(0.75rem, 3vw, 0.85rem);
+        }
+
+        /* media queries tambahan untuk extra small */
+        @media (max-width: 640px) {
+            .container {
+                padding: 0.8rem 1rem;
+            }
+            .navbar {
+                flex-direction: column;
+                align-items: stretch;
+                border-radius: 1.8rem;
+                padding: 1rem;
+            }
+            .nav-links {
+                justify-content: center;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .section-title {
+                margin-top: 1.5rem;
+            }
+            .stat-item {
+                justify-content: center;
+            }
+            .card h3 {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.6rem;
+            }
+            .contact-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .grid-2col {
+                gap: 1.2rem;
+            }
+        }
+
+        /* tablet landscape */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .container {
+                padding: 1.2rem 2rem;
+            }
+            .hero-content {
+                max-width: 60%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- navbar responsif -->
+    <div class="navbar">
+        <div class="logo"></i>Portofolio Saya</div>
+        <div class="nav-links">
+            <a href="#about">Tentang</a>
+            <a href="#experience">Pengalaman</a>
+            <a href="#skills">Keahlian</a>
+            <a href="#contact" class="btn-resume">Hubungi</a>
+        </div>
+    </div>
+
+    <!-- Hero area -->
+    <div class="hero" id="about">
+        <div class="hero-content">
+            <span class="badge"><i class="fas fa-briefcase"></i>Ilmu Aktuaria - Universitas Muhammadiyah Bulukumba</span>
+            <h1>Lukman, S.Aktr.</h1>
+            <p style="font-size: clamp(0.9rem, 4vw, 1.1rem); max-width: 100%;">Saya merupakan lulusan S1 Ilmu Aktuaria yang memiliki kemampuan dalam pengolahan data, administrasi, serta analisis dasar keuangan. Terbiasa bekerja secara teliti, sistematis, dan bertanggung jawab dalam menyelesaikan tugas, khususnya yang berkaitan dengan pencatatan, pengelolaan, dan pengarsipan data. Memiliki keterampilan dalam penggunaan Microsoft Office, terutama Microsoft Excel dan Word, serta didukung dengan kemampuan komunikasi dan kerja sama tim yang baik. Dengan latar belakang pendidikan dan pengalaman yang dimiliki, saya siap berkontribusi secara optimal dalam mendukung operasional dan pelayanan di lingkungan kerja profesional</p>
+            <div class="hero-stats">
+                <div class="stat-item"><i class="fas fa-map-marker-alt"></i> Bantaeng, Sulawesi Selatan</div>
+                <div class="stat-item"><i class="fas fa-calendar-alt"></i> 24 Desember 2001</div>
+                <div class="stat-item"><i class="fas fa-envelope"></i> lukmn0012@gmail.com</div>
+            </div>
+        </div>
+        <div class="hero-avatar">
+            <img src="img/luk.jpg" alt="Foto Profil Lukman" class="avatar-image">
+        </div>
+    </div>
+
+    <!-- Dua versi CV + pendidikan / organisasi (Flexibel) -->
+    <div class="grid-2col">
+        <div class="card">
+            <h3><i class="fas fa-graduation-cap"></i> Pendidikan & Pengalaman</h3>
+            <div class="timeline-item">
+                <div class="timeline-date">2020 – 2024</div>
+                <div class="timeline-title">S1 Ilmu Aktuaria · Universitas Muhammadiyah Bulukumba</div>
+                <div>Matkul: Matematika Keuangan, Statistika, Pemrograman</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Feb 2022 – Agt 2024</div>
+                <div class="timeline-title">Asisten Lab Komputer Aktuaria</div>
+                <div>Bimbingan praktikum, software statistik & pemrograman (R, Python).</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Jul 2024 – Sep 2024</div>
+                <div class="timeline-title">Praktek Kerja Lapangan · Pegadaian Syariah</div>
+                <div>Entri data nasabah, canvassing, pembuatan surat & validasi PEPINDO.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Agt 2024 – Feb 2025</div>
+                <div class="timeline-title">Laboran Lab Komputer Aktuaria</div>
+                <div>Maintenance hardware/software, update sistem, troubleshooting jaringan.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3><i class="fas fa-users"></i> Organisasi</h3>
+            <div class="timeline-item">
+                <div class="timeline-date">2021 – 2022</div>
+                <div class="timeline-title">Ikatan Mahasiswa Muhammadiyah · Sekretaris Seni Budaya & Olahraga</div>
+                <div>Penyusunan program kerja, koordinasi event kepemudaan.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2022 – 2023</div>
+                <div class="timeline-title">Ikatan Mahasiswa Prodi Aktuaria · Sekretaris Bidang Media</div>
+                <div>Rencana publikasi, dokumentasi, pengelolaan media sosial.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SKILLS dengan Bar & Chart.js responsif -->
+    <div id="skills">
+        <div class="section-title"><i class="fas fa-chart-simple"></i> Kompetensi & Skill Inti</div>
+        <div class="grid-2col">
+            <!-- Bar Skill Manual -->
+            <div class="skill-bars">
+                <div class="skill-item">
+                    <div class="skill-name"><span>📊 Analisis Data & Statistik</span><span>80%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" data-width="90"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name"><span>🐍 Python (Pandas, Visualisasi)</span><span>45%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" data-width="45"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name"><span>📈 R & Pemodelan Aktuaria</span><span>50%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" data-width="50"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name"><span>📑 Microsoft Office (Word, Excel)</span><span>95%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" data-width="95"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name"><span>🤖 AI Tools</span><span>90%</span></div>
+                    <div class="bar-bg"><div class="bar-fill" data-width="90"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pengalaman Kerja -->
+    <div id="experience">
+        <div class="section-title"><i class="fas fa-briefcase"></i> Pengalaman Profesional</div>
+        <div class="grid-2col">
+            <div class="card">
+                <h3><i class="fas fa-laptop-code"></i> Asisten Laboratorium & Laboran</h3>
+                <ul style="list-style: none;">
+                    <li><i class="fas fa-check-circle" style="color:#3b82f6; margin-top: 3px;"></i> Membimbing 50+ mahasiswa dalam praktikum aktuaria & software statistik.</li>
+                    <li><i class="fas fa-check-circle" style="color:#3b82f6;"></i> Pemeliharaan 30+ unit komputer, instalasi R/RStudio, Python, Anaconda.</li>
+                    <li><i class="fas fa-check-circle" style="color:#3b82f6;"></i> Penyusunan modul praktikum pemodelan matematika & visualisasi data.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-hand-holding-usd"></i> Pegadaian Syariah - PKL</h3>
+                <ul style="list-style: none;">
+                    <li><i class="fas fa-phone-alt" style="color:#3b82f6;"></i> Telepon nasabah & pembuatan surat bukti rahn, dwiipat.</li>
+                    <li><i class="fas fa-database" style="color:#3b82f6;"></i> Entri data nasabah, validasi PEPINDO & administrasi produk gadai syariah.</li>
+                    <li><i class="fas fa-chart-line" style="color:#3b82f6;"></i> Literasi produk & canvassing, peningkatan pengalaman customer service.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tools & tambahan grid -->
+    <div class="grid-2col" style="margin-top: 1rem;">
+        <div class="card">
+            <h3><i class="fas fa-microchip"></i> Tools & Bahasa Pemrograman</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
+                <span class="highlight"><i class="fab fa-python"></i> Python</span>
+                <span class="highlight"><i class="fab fa-r-project"></i> R Language</span>
+                <span class="highlight"><i class="fab fa-php"></i> PHP</span>
+                <span class="highlight"><i class="fab fa-html5"></i> HTML/CSS</span>
+                <span class="highlight"><i class="fas fa-chart-pie"></i> Tableau (Basic)</span>
+                <span class="highlight"><i class="fas fa-robot"></i> AI (ChatGPT, Gemini)</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3><i class="fas fa-trophy"></i> Minat & Kontribusi</h3>
+            <p>✔ Pemodelan Keuangan & Resiko <br> ✔ Visualisasi Data Interaktif <br> ✔ Machine Learning dasar & Prediksi <br> ✔ Kolaborasi Tim & Komunikasi Efektif</p>
+        </div>
+    </div>
+
+    <!-- Contact Section Responsif -->
+    <div id="contact">
+        <div class="section-title"><i class="fas fa-address-card"></i> Hubungi Saya</div>
+        <div class="card" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.2rem;">
+            <div>
+                <p><i class="fas fa-envelope"></i> <strong>Email Utama:</strong> lukmn0012@gmail.com</p>
+                <p><i class="fas fa-phone-alt"></i> <strong>Telepon/WA:</strong> 082153410530</p>
+                <p><i class="fab fa-instagram"></i> <strong>Instagram:</strong> @human.luc</p>
+                <p><i class="fas fa-map-pin"></i> Bantaeng, Sulawesi Selatan – siap untuk hybrid/onsite</p>
+            </div>
+            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                <a href="#" class="contact-btn" id="copyEmailBtn" style="background:#0f172a; color:white;"><i class="fas fa-copy"></i> Salin Email</a>
+                <a href="mailto:lukmn0012@gmail.com" class="contact-btn"><i class="fas fa-paper-plane"></i> Kirim Pesan</a>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <i class="fas fa-chart-line"></i> Portofolio Aktuaria & Data — Lukman, S.Aktr. | Siap berkontribusi untuk tim finansial & data analytics.
+    </footer>
+</div>
+
+<script>
+    // ========== RESPONSIVE ANIMATION SKILL BAR ==========
+    const barFills = document.querySelectorAll('.bar-fill');
+    function animateBars() {
+        barFills.forEach(bar => {
+            const width = bar.getAttribute('data-width');
+            if(width && bar.style.width !== width+'%') {
+                bar.style.width = width + '%';
+            }
+        });
+    }
+
+    // Intersection Observer untuk animasi skill bar
+    const skillSection = document.querySelector('#skills');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                animateBars();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+    if(skillSection) observer.observe(skillSection);
+
+    // fallback jika sudah terlihat saat load
+    window.addEventListener('load', () => {
+        if(skillSection && skillSection.getBoundingClientRect().top < window.innerHeight - 80) {
+            animateBars();
+        }
+        window.addEventListener('scroll', function onScrollHandler() {
+            if(skillSection && skillSection.getBoundingClientRect().top < window.innerHeight - 80) {
+                animateBars();
+                window.removeEventListener('scroll', onScrollHandler);
+            }
+        });
+    });
+
+    // ========== CHART JS (Responsif canvas) ==========
+    const ctx = document.getElementById('skillChart').getContext('2d');
+    let skillChart;
+    function initChart() {
+        if(skillChart) skillChart.destroy();
+        skillChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Python', 'R', 'MS Excel', 'Statistika', 'AI/ML', 'PHP/Web'],
+                datasets: [{
+                    label: 'Tingkat Keahlian (%)',
+                    data: [85, 80, 88, 90, 78, 72],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(37, 99, 235, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(245, 158, 11, 0.8)',
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(236, 72, 153, 0.8)'
+                    ],
+                    borderRadius: 10,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.8,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { position: 'top', labels: { font: { size: window.innerWidth < 600 ? 10 : 12 } } },
+                    tooltip: { backgroundColor: '#0f172a' }
+                },
+                scales: {
+                    y: { beginAtZero: true, max: 100, grid: { color: '#e2e8f0' }, title: { display: true, text: 'Kemampuan (%)', font: { size: 11 } } },
+                    x: { ticks: { font: { size: window.innerWidth < 600 ? 9 : 11 }, maxRotation: 30, minRotation: 20 } }
+                }
+            }
+        });
+    }
+    initChart();
+    window.addEventListener('resize', () => {
+        initChart();
+    });
+
+    // Copy email 
+    const copyBtn = document.getElementById('copyEmailBtn');
+    if(copyBtn) {
+        copyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigator.clipboard.writeText('lukmn0012@gmail.com');
+            const original = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+            setTimeout(() => { copyBtn.innerHTML = original; }, 2000);
+        });
+    }
+</script>
+</body>
+</html>
